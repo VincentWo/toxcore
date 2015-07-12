@@ -30,6 +30,8 @@ extern "C" {
 
 #include <stdint.h>
 
+#include "../toxcore/Messenger.h"
+
 /* Clients are encouraged to set this as the maximum length names can have. */
 #define TOXDNS_MAX_RECOMMENDED_NAME_LENGTH 32
 
@@ -48,12 +50,21 @@ extern "C" {
  * request we stored earlier to get the Tox id returned by the DNS server.
  */
 
+
+typedef struct {
+    uint8_t temp_pk[crypto_box_PUBLICKEYBYTES];
+    uint8_t temp_sk[crypto_box_SECRETKEYBYTES];
+    uint8_t server_public_key[crypto_box_PUBLICKEYBYTES];
+    uint8_t shared_key[crypto_box_KEYBYTES];
+    uint32_t nonce;
+    uint32_t nonce_start;
+} DNS_Object;
 /* Create a new tox_dns3 object for server with server_public_key of size TOX_CLIENT_ID_SIZE.
  *
  * return Null on failure.
  * return pointer object on success.
  */
-void *tox_dns3_new(uint8_t *server_public_key);
+DNS_Object* tox_dns3_new(uint8_t *server_public_key);
 
 /* Destroy the tox dns3 object.
  */

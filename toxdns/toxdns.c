@@ -45,14 +45,6 @@ uint8_t i = 0; \
     } \
 } \
  
-typedef struct {
-    uint8_t temp_pk[crypto_box_PUBLICKEYBYTES];
-    uint8_t temp_sk[crypto_box_SECRETKEYBYTES];
-    uint8_t server_public_key[crypto_box_PUBLICKEYBYTES];
-    uint8_t shared_key[crypto_box_KEYBYTES];
-    uint32_t nonce;
-    uint32_t nonce_start;
-} DNS_Object;
 
 static void dns_new_temp_keys(DNS_Object *d)
 {
@@ -66,7 +58,7 @@ static void dns_new_temp_keys(DNS_Object *d)
  * return Null on failure.
  * return pointer object on success.
  */
-void *tox_dns3_new(uint8_t *server_public_key)
+DNS_Object *tox_dns3_new(uint8_t *server_public_key)
 {
     DNS_Object *d = malloc(sizeof(DNS_Object));
 
