@@ -72,7 +72,7 @@ DNS_Object *tox_dns3_new(uint8_t *server_public_key)
 
 /* Destroy the tox dns3 object.
  */
-void tox_dns3_kill(void *dns3_object)
+void tox_dns3_kill(DNS_Object *dns3_object)
 {
     memset(dns3_object, 0, sizeof(DNS_Object));
     free(dns3_object);
@@ -90,7 +90,7 @@ void tox_dns3_kill(void *dns3_object)
  * returns length of string on success.
  * returns -1 on failure.
  */
-int tox_generate_dns3_string(void *dns3_object, uint8_t *string, uint16_t string_max_len, uint32_t *request_id,
+int tox_generate_dns3_string(DNS_Object *dns3_object, uint8_t *string, uint16_t string_max_len, uint32_t *request_id,
                              uint8_t *name, uint8_t name_len)
 {
 #define DOT_INTERVAL (6 * 5)
@@ -187,7 +187,7 @@ static int decode(uint8_t *dest, uint8_t *src)
  * returns 0 on success.
  *
  */
-int tox_decrypt_dns3_TXT(void *dns3_object, uint8_t *tox_id, uint8_t *id_record, uint32_t id_record_len,
+int tox_decrypt_dns3_TXT(DNS_Object *dns3_object, uint8_t *tox_id, uint8_t *id_record, uint32_t id_record_len,
                          uint32_t request_id)
 {
     DNS_Object *d = dns3_object;
